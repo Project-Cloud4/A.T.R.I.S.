@@ -15,6 +15,14 @@ export default async (req, res) => {
       const data = req.body;
       delete req.body.action;
 
+      if (req.body.increment) {
+        delete req.body.increment;
+        await redis.hincrby(shelter, "seats", 1);
+
+        res.status(200).send("ok");
+        return;
+      }
+
       if (req.body.name) res.status(400).send("pls don't change name:((");
 
       await redis.hset(shelter, data);
