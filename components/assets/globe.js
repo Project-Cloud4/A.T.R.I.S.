@@ -4,19 +4,7 @@ import { useGLTF } from "@react-three/drei";
 
 export function Model(props) {
   let { nodes: node1, materials: material1 } = useGLTF("/low_poly_earth.glb");
-
-  let { nodes: thing, materials: thingy } = useGLTF("/untitled.glb");
-
-  //   const water = new MeshLambertMaterial({
-  //     color: 0xffffff,
-  //     emissive: 0x40607f,
-  //     side: DoubleSide,
-  //   });
-  //   const earth = new MeshLambertMaterial({
-  //     color: 0xffffff,
-  //     emissive: 0x45a440,
-  //     side: DoubleSide,
-  //   });
+  let { nodes: thing, materials: thingy } = useGLTF("/sample.glb");
 
   return (
     <group {...props} dispose={null}>
