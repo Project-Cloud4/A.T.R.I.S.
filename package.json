@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.46.4",
+    "leaflet": "^1.9.3",
     "@upstash/redis": "^1.18.1",
     "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-leaflet": "^4.2.0",
     "react-three-fiber": "^6.0.13",
     "three": "^0.147.0"
   },
