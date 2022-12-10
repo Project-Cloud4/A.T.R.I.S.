@@ -1,3 +1,9 @@
+import Location from "../components/location";
+
 export default function Home() {
-  return <div>It Works</div>;
+  return (
+    <div>
+      <Location />
+    </div>
+  );
 }
