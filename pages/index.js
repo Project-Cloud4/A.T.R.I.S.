@@ -1,9 +1,9 @@
-import Navbar from "../components/navbar";
+import Resources from "../components/Resources";
 
 export default function Home() {
   return (
     <div>
-      <Navbar />
+     <Resources />
     </div>
   );
 }
