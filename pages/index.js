@@ -1,9 +1,9 @@
-import Resources from "../components/Resources";
+import Dashboard from "../components/dashboard";
 
 export default function Home() {
   return (
     <div>
-     <Resources />
+      <Dashboard />
     </div>
   );
 }

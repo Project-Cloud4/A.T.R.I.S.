@@ -1,45 +1,64 @@
-function Resources() {
+function Resource({ props }) {
   return (
-    <div>
-      <label htmlFor="my-modal" className="btn bg-secondary">
-        <h1 className="text-base-200">Resources</h1>
-      </label>
-      <input type="checkbox" id="my-modal" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
-          <div className="grid grid-rows-4 grid-flow-col gap-4 w-96">
-            <button className="btn btn-active btn-primary">
-              <h1 className="text-base-200">NUMBERS OF MEALS</h1>
-            </button>
-            <button className="btn btn-active btn-primary ">
-              <h1 className="text-base-200">WATER</h1>
-            </button>
-            <div className="dropdown">
-              <label tabIndex={0} className="btn btn-active btn-primary w-96">
-                <h1 className="text-base-200">MEDICATIONS</h1>
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-primary rounded-box w-52"
-              >
-                <li>
-                  <h1 className="text-base-200">x</h1>
-                </li>
-                <li>
-                  <h1 className="text-base-200">x</h1>
-                </li>
-                <li>
-                  <h1 className="text-base-200">x</h1>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="modal-action">
-            <label htmlFor="my-modal" className="btn btn-primary">
-              Back!
-            </label>
-          </div>
+    <div className="alert shadow-lg h-1/3 mb-2">
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          className="stroke-info flex-shrink-0 w-12 h-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <div>
+          <h3 className="font-bold font-mono text-3xl">{props.name}</h3>
         </div>
+      </div>
+      <div className="text-2xl font-mono font-bold flex-1">{props.cty}</div>
+      <div className="flex-none">
+        <button className="btn btn-sm h-20 w-16 text-2xl font-mono">See</button>
+      </div>
+    </div>
+  );
+}
+
+function Resources({ exitmodal }) {
+  const resources = [
+    {
+      name: "Food",
+      cty: "450 Ratios",
+    },
+
+    {
+      name: "Water",
+      cty: "700 liters",
+    },
+
+    {
+      name: "Medicine",
+      cty: "Covered",
+    },
+  ];
+
+  return (
+    <div className="h-screen w-screen flex justify-center items-center relative z-24">
+      <div className="z-50 h-1/2 w-3/6 card card-compact w-96 bg-base-300 shadow-xl absolute p-10">
+        <button
+          className="btn btn-primary h-8 w-11 text-3xl absolute -mt-8 -ml-8"
+          onClick={() => {
+            exitmodal();
+          }}
+        >
+          X
+        </button>
+        {resources.map((resource) => {
+          return <Resource key={resource.name} props={resource} />;
+        })}
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import Resources from "./Resources";
+
 function Widget({ props }) {
   return (
     <div
@@ -9,7 +12,9 @@ function Widget({ props }) {
           ? "bg-secondary"
           : "bg-neutral")
       }
-      onClick={props.action !== null ? props.action : ""}
+      onClick={() => {
+        props["action"]();
+      }}
     >
       <div className="card-body justify-center items-center">
         <h2 className="card-title justify-center text-5xl text-mono  ">
@@ -30,15 +35,25 @@ function Widget({ props }) {
 }
 
 function AdminApps() {
+  const [modal, setModal] = useState(false);
+
+  let actModal = () => {
+    setModal(!modal);
+    console.log(modal);
+  };
+
   let widgets = [
-    { title: "On Their Way", cty: "3", type: "0", action: "" },
-    { title: "Energy", cty: "working", type: "0", action: "" },
-    { title: "Heat", cty: "off", type: "2", action: "" },
-    { title: "Resources", cty: "show", type: "3", action: "" },
+    { title: "On Their Way", cty: "3", type: "0", action: () => {} },
+    { title: "Energy", cty: "working", type: "0", action: () => {} },
+    { title: "Heat", cty: "off", type: "2", action: () => {} },
+    { title: "Resources", cty: "show", type: "3", action: actModal },
   ];
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen z-1">
+      <div className="absolute  z-10">
+        {modal === true ? <Resources exitmodal={actModal} /> : ""}
+      </div>
       <div className="flex flex-row gap-4 ">
         <div className="basis-1/3 h-screen flex flex-col items-center justify-center">
           <h1 className="text-9xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary basis-1/6 font-bold inline-block">
