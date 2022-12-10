@@ -1,3 +1,5 @@
+import Location from "../components/location";
+
 import Navbar from "../components/navbar";
 
 import ThreeGlobe from "../components/threeglobe";
