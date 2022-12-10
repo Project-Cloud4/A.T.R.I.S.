@@ -36,7 +36,7 @@ function Resources({ exitmodal }) {
 
     {
       name: "Water",
-      cty: "700 liters",
+      cty: "700 Liters",
     },
 
     {
@@ -47,7 +47,7 @@ function Resources({ exitmodal }) {
 
   return (
     <div className="h-screen w-screen flex justify-center items-center relative z-24">
-      <div className="z-50 h-1/2 w-3/6 card card-compact w-96 bg-base-300 shadow-xl absolute p-10">
+      <div className="z-50 h-1/2 w-[50%] card card-compact w-96 bg-base-300 shadow-xl absolute p-10">
         <button
           className="btn btn-primary h-8 w-11 text-3xl absolute -mt-8 -ml-8"
           onClick={() => {
