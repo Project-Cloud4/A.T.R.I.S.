@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import Location from "../components/location";
 import Navbar from "../components/navbar";
 import ThreeGlobe from "../components/threeglobe";
+import getLocation from "../utils/locate";
+export async function getServerSideProps(context) {
+  const location = await getLocation(context);
+  return { props: { location: location } };
+}
 
-export default function Home() {
+export default function Home({ location }) {
   return (
     <div className="w-screen h-screen ">
       <div className="">
@@ -12,7 +18,7 @@ export default function Home() {
         <ThreeGlobe />
       </div>
       <div>
-        <Location />
+        <Location location={location} />
       </div>
     </div>
   );
