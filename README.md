@@ -1,30 +1,40 @@
-## Getting Started
+# A.T.R.I.S.
 
-First:
+#### Automated Tracking and Response Informational System
 
-npm install
+##### A coordinated response system to an emergency.
 
-Then run the development server:
+---
 
-npm run dev
+### Setup
 
-To add code go to /pages/index.js and then everything is the same as in a react app;
+- Clone this repo and install deps.
+- Set the .env variables accordingly.
+  - NEXT_PUBLIC_MAPBOX_ID
+  - NEXT_PUBLIC_MAPBOX_DEV_API
+  - UPSTASH_REDIS_REST_URL
+  - UPSTASH_REDIS_REST_TOKEN
+  - UPSTASH_REDIS_REST_URL
+  - UPSTASH_REDIS_REST_TOKEN
+  - NEXT_PUBLIC_ABLY_API_KEY
+- To run the code in development mode: `npm run dev`
+- To create a production build: `npm run build`
+- To run the production build: `npm run start`
 
-## API specs
-  - /api/shelter/add: 
-    * name: string
-    * ... (data)
-  - /api/shelter/[name]:
-    * action: get | update | delete
-      - update: 
-        - ... (data)
-  - /api/location/add: 
-    * name: string
-    * shelters: string[]
-  - /api/location/[name]:
-    * action: list | add | remove | delete (/remove will remove a shelter, /delete will delete the location)
-      - add:
-        - shelters: string[]
-      - remove:
-        - shelter: string
-      
+---
+
+### Tech Stack :
+
+#### UI
+
+Tailwind -> DaisyUI .
+
+#### Front-End
+
+ReactJS -> NextJS.
+
+#### Back-End
+
+Serverless -> Next lambdas.
+Database -> Upstash Redis.
+WebSockets -> Ably.
