@@ -23,6 +23,7 @@ function Navbar({ type }) {
               placeholder="Location:"
               className=" visible sm:hidden input input-bordered "
             />
+
             <input
               type="text"
               placeholder="Search"

@@ -4,6 +4,8 @@ import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
 import L from "leaflet";
 import getLocation from "../utils/locate";
 import getShelters from "../utils/getShelters";
+import { useChannel } from "@ably-labs/react-hooks";
+import { configureAbly } from "@ably-labs/react-hooks";
 
 //export async function getServerSideProps(context) {
 //  // luam locatia dupa ip
@@ -17,6 +19,65 @@ import getShelters from "../utils/getShelters";
 //    },
 //  };
 //}
+
+const Shelteri = ({ shelter }) => {
+  configureAbly({ key: process.env.NEXT_PUBLIC_ABLY_API_KEY });
+  const [usage, setUsage] = useState(shelter.usage);
+
+  const [channel] = useChannel("usage", (msg) => {
+    console.log(msg.data);
+    setUsage(msg.data);
+  });
+
+  const incr = (x) => {
+    let h = x.split("/");
+
+    let nr = parseInt(h[0]);
+    return (nr + 1).toString() + "/" + h[1];
+  };
+  return (
+    <div>
+      <h1 className="text-2xl font-mono font-bold">{shelter.name}</h1>
+      <div>
+        <div className="alert alert-success shadow-lg">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current flex-shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="text-xl">{usage}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 className="text-lg flex flex-row justify-center items-center">
+          <img src="/icons/medicine.svg" />
+          Medicine
+        </h1>
+        <div>{shelter.medicine}</div>
+      </div>
+      <div className="flex items-center justify-center">
+        <button
+          onClick={async () => {
+            await channel.publish("update", incr(usage));
+          }}
+          className="btn btn-primary"
+        >
+          On My Way!
+        </button>
+      </div>
+    </div>
+  );
+};
 
 function ChangeView({ coords }) {
   const map = useMap();
@@ -81,39 +142,7 @@ export default function Map() {
                 icon={createIcon("/location.svg")}
               >
                 <Popup>
-                  <h1 className="text-2xl font-mono font-bold">
-                    {shelter.name}
-                  </h1>
-                  <div>
-                    <div className="alert alert-success shadow-lg">
-                      <div>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="stroke-current flex-shrink-0 h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        <span className="text-xl">{shelter.usage}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h1 className="text-lg flex flex-row">
-                      <img src="/icons/medicine.svg" />
-                      Medicine
-                    </h1>
-                    <div>{shelter.medicine}</div>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <button className="btn btn-primary">On My Way!</button>
-                  </div>
+                  <Shelteri shelter={shelter} />
                 </Popup>
               </Marker>
             );

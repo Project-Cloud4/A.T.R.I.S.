@@ -2,19 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Model } from "./assets/globe";
-import { MathUtils, Box3 } from "three";
+import { MathUtils, Box1, Vector3 } from "three";
+
+function lonLatToVector3(lng, lat, out) {
+  out = out || new Vector3();
+
+  //flips the Y axis
+  lat = Math.PI / 2 - lat;
+
+  //distribute to sphere
+  out.set(
+    Math.sin(lat) * Math.sin(lng),
+    Math.cos(lat),
+    Math.sin(lat) * Math.cos(lng)
+  );
+
+  return out;
+}
 
 function Box() {
-  const getCoords = (location) => {
-    let earthRadius = 6397;
-
-    let x = earthRadius * Math.cos(location.lat) * Math.cos(location.lon);
-    let y = earthRadius * Math.cos(location.lat) * Math.sin(location.lon);
-    let z = earthRadius * Math.sin(location.lat);
-
-    return { x: x, y: y, z: z };
-  };
-
   const [loading, setLoading] = useState(true);
   const [latlng, setLatlng] = useState([]);
 
@@ -26,17 +32,20 @@ function Box() {
 
   let [coordinates, setCoordinates] = useState({ x: 0, z: 0, y: 0 });
   useEffect(() => {
-    if (latlng.latitude && latlng.longitude) {
-      setCoordinates(
-        getCoords({ lat: latlng.latitude, lon: latlng.longitude })
-      );
-      console.log(coordinates);
-      setLoading(false);
-    }
+    let coord = lonLatToVector3(latlng.longitude, latlng.latitude);
+    //console.log(  latlng);
+    coord.y = coord.y + 0.4;
+    coord.z = coord.z - 0.3;
+    coord.x = coord.x - 0.4;
+    setCoordinates(coord);
+    console.log(coord);
+
+    //console.log(coordinates);
   }, [latlng]);
+
   const mesh = useRef(); //tood add stuff
   return (
-    <mesh position={[coordinates.x, coordinates.z, coordinates.y]} ref={mesh}>
+    <mesh position={coordinates} ref={mesh}>
       <boxGeometry args={[0.1, 0.1, 0.1]} />
       <meshStandardMaterial color="red" />
     </mesh>
@@ -45,11 +54,11 @@ function Box() {
 
 const Earth = () => {
   const modelEnv = useRef();
-  let rotationDest = 3;
-  let currentRotation = 0;
+  //let rotationDest = 0.1;
+  //  let currentRotation = 0;
   useFrame((state, delta) => {
-    currentRotation = MathUtils.lerp(currentRotation, rotationDest, 0.05); //linear interpolation
-    modelEnv.current.rotation.y = currentRotation;
+    // currentRotation = MathUtils.lerp(currentRotation, rotationDest, 0.05); //linear interpolation
+    // modelEnv.current.rotation.y = currentRotation;
   });
 
   return (
