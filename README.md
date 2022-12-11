@@ -27,14 +27,14 @@
 
 #### UI
 
-Tailwind -> DaisyUI .
+- Tailwind -> DaisyUI .
 
 #### Front-End
 
-ReactJS -> NextJS.
+- ReactJS -> NextJS.
 
 #### Back-End
 
-Serverless -> Next lambdas.
-Database -> Upstash Redis.
-WebSockets -> Ably.
+- Serverless -> Vercel functions (lambdas).
+- Database -> Upstash Redis.
+- WebSockets -> Ably.
