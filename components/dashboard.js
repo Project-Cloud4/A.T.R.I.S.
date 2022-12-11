@@ -37,6 +37,7 @@ function Widget({ props }) {
       <div className="card-body justify-center items-center">
         <h2 className="card-title justify-center text-5xl text-mono">
           {title}
+          <img src={props.img} className="h-16 invert "></img>
         </h2>
         <div className="flex-1 flex justify-center items-center">
           {type === "3" ? (
@@ -84,10 +85,34 @@ function AdminApps() {
   };
 
   let widgets = [
-    { title: "On Their Way", cty: "3", type: "1", action: () => {} },
-    { title: "Energy", cty: "on", type: "0", action: () => {} },
-    { title: "Heat", cty: "off", type: "2", action: () => {} },
-    { title: "Resources", cty: "show", type: "3", action: actModal },
+    {
+      title: "On Their Way",
+      cty: "3",
+      type: "1",
+      img: "/icons/follow_the_signs_black_24dp.svg",
+      action: () => {},
+    },
+    {
+      title: "Energy",
+      cty: "on",
+      type: "0",
+      img: "/icons/bolt_black_24dp.svg",
+      action: () => {},
+    },
+    {
+      title: "Heat",
+      cty: "off",
+      type: "2",
+      img: "/icons/heat_pump_black_24dp.svg",
+      action: () => {},
+    },
+    {
+      title: "Resources",
+      cty: "show",
+      type: "3",
+      img: "/icons/star_black_24dp.svg ",
+      action: actModal,
+    },
   ];
 
   return (
@@ -97,7 +122,7 @@ function AdminApps() {
       </div>
       <div className="flex flex-row gap-4 ">
         <div className="basis-1/3 h-screen flex flex-col items-center justify-center relative z-0">
-          <h1 className="text-9xl text-primary basis-1/6 font-bold inline-block relative z-3 ">
+          <h1 className="text-9xl text-primary basis-1/6 font-bold font-mono inline-block relative z-3 ">
             Dashboard
           </h1>
 

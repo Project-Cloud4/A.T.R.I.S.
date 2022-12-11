@@ -1,4 +1,6 @@
-function Resource({ props }) {
+import { useState } from "react";
+
+function Resource({ props, update }) {
   return (
     <div className="alert shadow-lg h-1/3 mb-2">
       <div>
@@ -21,33 +23,51 @@ function Resource({ props }) {
       </div>
       <div className="text-2xl font-mono font-bold flex-1">{props.cty}</div>
       <div className="flex-none">
-        <button className="btn btn-sm h-20 w-16 text-2xl font-mono">See</button>
+        <img src={props.img} className="h-16 invert "></img>
+        <button
+          onClick={() => update(props.data)}
+          className="btn btn-sm h-20 w-16 text-2xl font-mono"
+        >
+          See
+        </button>
       </div>
     </div>
   );
 }
 
 function Resources({ exitmodal }) {
+  const [summary, setSummary] = useState(false);
+
+  let updateSummary = (data) => {
+    setSummary(data);
+  };
+
   const resources = [
     {
       name: "Food",
       cty: "450 Ratios",
+      data: "=> Beans",
+      img: "/icons/local_dining_black_24dp.svg",
     },
 
     {
       name: "Water",
       cty: "700 Liters",
+      data: "=> 1400 x0.5 L",
+      img: "/icons/water_drop_black_24dp.svg",
     },
 
     {
       name: "Medicine",
       cty: "Covered",
+      data: "=> Insuline",
+      img: "/icons/healing_black_24dp.svg",
     },
   ];
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center relative z-24">
-      <div className="z-50 h-1/2 w-[50%] card card-compact w-96 bg-base-300 shadow-xl absolute p-10">
+    <div className="h-screen w-screen flex flex-row justify-center items-center relative  z-24">
+      <div className="z-50 h-1/2 w-1/3 card card-compact bg-base-300 shadow-xl  p-10">
         <button
           className="btn btn-primary h-8 w-11 text-3xl absolute -mt-8 -ml-8"
           onClick={() => {
@@ -57,9 +77,24 @@ function Resources({ exitmodal }) {
           X
         </button>
         {resources.map((resource) => {
-          return <Resource key={resource.name} props={resource} />;
+          return (
+            <Resource
+              key={resource.name}
+              props={resource}
+              update={updateSummary}
+            />
+          );
         })}
       </div>
+      {summary !== false ? (
+        <div className="card w-96 h-1/2 bg-base-300 ml-8 shadow-xl">
+          <div className="card-body">
+            <h1 className="text-xl">{summary}</h1>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
