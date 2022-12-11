@@ -1,12 +1,10 @@
-
-
 function Navbar({ type }) {
   return (
     <div className="navbar bg-accent  w-screen sm:w-screen flex flex-row">
       <div className="flex-1">
         <label className="circle avatar pl-3 pr-3">
           <div className="w-20 rounded-full">
-            <img src="/logo_admin.png" />
+            <img src="/artislogo.png" />
           </div>
         </label>
         <div className=" text-xl sm:text-3xl font-mono text-base-100">
@@ -40,4 +38,4 @@ function Navbar({ type }) {
   );
 }
 
-export default NavBarAdmin;
+export default Navbar;

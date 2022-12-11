@@ -3,7 +3,7 @@ import { MeshLambertMaterial, DoubleSide } from "three";
 import { useGLTF } from "@react-three/drei";
 
 export function Model(props) {
-  let { nodes: node1, materials: material1 } = useGLTF("/low_poly_earth.glb");
+  let { nodes: node1, materials: material1 } = useGLTF("/earth.glb");
   let { nodes: thing, materials: thingy } = useGLTF("/sample.glb");
 
   return (

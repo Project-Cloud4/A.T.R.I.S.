@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Resources from "./resources";
-import increment from "../utils/increment";
+import Resources from "../../components/resources";
+import increment from "../../utils/increment";
 import { useRouter } from "next/router";
 
 function Widget({ props }) {
@@ -37,18 +37,18 @@ function Widget({ props }) {
       }}
     >
       <div className="card-body justify-center items-center">
-        <h2 className="card-title justify-center text-5xl text-mono">
+        <h2 className="card-title justify-center text-5xl text-mono text-white">
           {title}
           <img src={props.img} className="h-16 invert "></img>
         </h2>
-        <div className="flex-1 flex justify-center items-center">
+        <div className="flex-1 flex justify-center items-center text-white">
           {type === "3" ? (
-            <button className="text-2xl font-bold text-mono btn-primary btn">
+            <button className="text-2xl font-bold text-mono btn-primary btn text-white">
               {cty}
             </button>
           ) : type === "2" ? (
             <div className="flex flex-col justify-center items-center">
-              <h3 className="text-5xl text-mono">{cty}</h3>
+              <h3 className="text-5xl text-mono text-white ">{cty}</h3>
               <input
                 type="checkbox"
                 className="toggle mt-3"
@@ -59,7 +59,7 @@ function Widget({ props }) {
             </div>
           ) : type === "0" ? (
             <div className="flex flex-col justify-center items-center">
-              <h3 className="text-5xl text-mono">{cty}</h3>
+              <h3 className="text-5xl text-mono text-white">{cty}</h3>
               <input
                 defaultChecked={true}
                 type="checkbox"
@@ -70,7 +70,7 @@ function Widget({ props }) {
               />
             </div>
           ) : (
-            <h3 className="text-5xl text-mono">{cty}</h3>
+            <h3 className="text-5xl text-mono text-white">{cty}</h3>
           )}
         </div>
       </div>
@@ -132,7 +132,7 @@ function AdminApps() {
 
           <div className=" card h-1/2 w-[80%] bg-secondary shadow-xl ">
             <div className="card-body">
-              <div className="flex justify-center items-center flex flex-col">
+              <div className="flex justify-center items-center flex-col">
                 <t className="text-center text-5xl text-accent font-bold font-mono">
                   People:
                 </t>
