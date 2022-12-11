@@ -1,3 +1,5 @@
+
+
 import { useEffect } from "react";
 import Location from "../components/location";
 import Navbar from "../components/navbar";
@@ -10,6 +12,7 @@ export async function getServerSideProps(context) {
 
 export default function Home({ location }) {
   return (
+
     <div className="w-screen h-screen ">
       <div className="">
         <Navbar type={1} />
