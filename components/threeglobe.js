@@ -1,17 +1,45 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Model } from "./assets/globe";
 import { MathUtils, Box3 } from "three";
 
-function Box(props) {
-  //todo add opacitiy hover
-  const mesh = useRef();
+const getCoords = (location) => {
+  let earthRadius = 6397;
+  let x = earthRadius * Math.cos(location.lat) * Math.cos(location.lon);
+  let y = earthRadius * Math.cos(location.lat) * Math.sin(location.lon);
+  let z = earthRadius * Math.sin(location.lat);
+  return { x: x, y: y, z: z };
+};
+
+function Box() {
+  const [loading, setLoading] = useState(true);
+  const [latlng, setLatlng] = useState([]);
+
+  useEffect(() => {
+    let location = navigator.geolocation.getCurrentPosition((position) => {
+      setLatlng(position.coords);
+    });
+  }, []);
+
+  let [coordinates, setCoordinates] = useState({ x: 0, z: 0, y: 0 });
+  useEffect(() => {
+    setCoordinates({ x: 1, y: 1, z: 1 }); //getCoords({ lat: latlng.latitude, lon: latlng.longitude }));
+    setLoading(false);
+    console.log(coordinates);
+  }, [latlng]);
+  const mesh = useRef(); //tood add stuff
   return (
-    <mesh position={props.props.position} ref={mesh}>
-      <boxGeometry args={props.props.xyz} />
-      <meshStandardMaterial color={props.props.color} />
-    </mesh>
+    <>
+      {loading ? (
+        <mesh position={coordinates} ref={mesh}>
+          <boxGeometry />
+          <meshStandardMaterial color="red" />
+        </mesh>
+      ) : (
+        console.log("NU MERE")
+      )}
+    </>
   );
 }
 
@@ -19,27 +47,14 @@ const Earth = () => {
   const modelEnv = useRef();
   let rotationDest = 3;
   let currentRotation = 0;
-  let coordinates = { x: 1452, z: 4976, y: 3693 };
-  let earthRadius = 6397;
   useFrame((state, delta) => {
-    CurrentRotation = MathUtils.lerp(CurrentRotation, RotationDest, 0.05); //linear interpolation
-    ModelEnv.current.rotation.y = CurrentRotation;
+    currentRotation = MathUtils.lerp(currentRotation, rotationDest, 0.05); //linear interpolation
+    modelEnv.current.rotation.y = currentRotation;
   });
 
   return (
     <mesh ref={modelEnv}>
       <Model />
-      <Box
-        props={{
-          position: [
-            coordinates.x / earthRadius,
-            coordinates.z / earthRadius,
-            coordinates.y / earthRadius,
-          ],
-          color: "red",
-          xyz: [0.1, 0.1, 0.1],
-        }}
-      />
     </mesh>
   );
 };
@@ -50,6 +65,7 @@ export default function ThreeGlobe() {
       <Canvas>
         <OrbitControls />
         <Earth />
+        <Box />
         <Environment preset="sunset" />
       </Canvas>
     </div>
