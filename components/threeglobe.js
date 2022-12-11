@@ -4,15 +4,17 @@ import { Environment, OrbitControls } from "@react-three/drei";
 import { Model } from "./assets/globe";
 import { MathUtils, Box3 } from "three";
 
-const getCoords = (location) => {
-  let earthRadius = 6397;
-  let x = earthRadius * Math.cos(location.lat) * Math.cos(location.lon);
-  let y = earthRadius * Math.cos(location.lat) * Math.sin(location.lon);
-  let z = earthRadius * Math.sin(location.lat);
-  return { x: x, y: y, z: z };
-};
-
 function Box() {
+  const getCoords = (location) => {
+    let earthRadius = 6397;
+
+    let x = earthRadius * Math.cos(location.lat) * Math.cos(location.lon);
+    let y = earthRadius * Math.cos(location.lat) * Math.sin(location.lon);
+    let z = earthRadius * Math.sin(location.lat);
+
+    return { x: x, y: y, z: z };
+  };
+
   const [loading, setLoading] = useState(true);
   const [latlng, setLatlng] = useState([]);
 
@@ -24,22 +26,20 @@ function Box() {
 
   let [coordinates, setCoordinates] = useState({ x: 0, z: 0, y: 0 });
   useEffect(() => {
-    setCoordinates({ x: 1, y: 1, z: 1 }); //getCoords({ lat: latlng.latitude, lon: latlng.longitude }));
-    setLoading(false);
-    console.log(coordinates);
+    if (latlng.latitude && latlng.longitude) {
+      setCoordinates(
+        getCoords({ lat: latlng.latitude, lon: latlng.longitude })
+      );
+      console.log(coordinates);
+      setLoading(false);
+    }
   }, [latlng]);
   const mesh = useRef(); //tood add stuff
   return (
-    <>
-      {loading ? (
-        <mesh position={coordinates} ref={mesh}>
-          <boxGeometry />
-          <meshStandardMaterial color="red" />
-        </mesh>
-      ) : (
-        console.log("NU MERE")
-      )}
-    </>
+    <mesh position={[coordinates.x, coordinates.z, coordinates.y]} ref={mesh}>
+      <boxGeometry args={[0.1, 0.1, 0.1]} />
+      <meshStandardMaterial color="red" />
+    </mesh>
   );
 }
 
