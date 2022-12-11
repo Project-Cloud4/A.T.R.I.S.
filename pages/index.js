@@ -1,13 +1,28 @@
-import Dashboard from "../components/dashboard";
-import NavBarAdmin from "../components/navbar";
 
-export default function Home() {
+
+import { useEffect } from "react";
+import Location from "../components/location";
+import Navbar from "../components/navbar";
+import ThreeGlobe from "../components/threeglobe";
+import getLocation from "../utils/locate";
+export async function getServerSideProps(context) {
+  const location = await getLocation(context);
+  return { props: { location: location } };
+}
+
+export default function Home({ location }) {
   return (
-    <div className=" bg-[url('/bg-admin.png')] bg-cover bg-no-repeat relative">
-      <div className="fixed w-screen z-9 ">
-        <NavBarAdmin />
+
+    <div className="w-screen h-screen ">
+      <div className="">
+        <Navbar type={1} />
       </div>
-      <Dashboard />
+      <div className="-mt-[15%] sm:-mt-[4%]  bg-[url('/bg-home-mobile.png')] sm:bg-[url('/bg-home.png')] bg-contain bg-no-repeat ">
+        <ThreeGlobe />
+      </div>
+      <div>
+        <Location location={location} />
+      </div>
     </div>
   );
 }
