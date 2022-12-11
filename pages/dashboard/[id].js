@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Resources from "./resources";
+import increment from "../utils/increment";
+import { useRouter } from "next/router";
 
 function Widget({ props }) {
   const [check, setCheck] = useState(props.cty === "on");
@@ -78,6 +80,8 @@ function Widget({ props }) {
 
 function AdminApps() {
   const [modal, setModal] = useState(false);
+  const [usage, setUsage] = useState("14/20");
+  const { id: shelter } = useRouter().query;
 
   let actModal = () => {
     setModal(!modal);
@@ -133,7 +137,7 @@ function AdminApps() {
                   People:
                 </t>
                 <t className="text-center text-5xl text-accent font-bold font-mono ">
-                  14/20
+                  {usage}
                 </t>
               </div>
               <div className=" flex justify-center items-center flex-1 text-3xl">
@@ -145,15 +149,32 @@ function AdminApps() {
                 </div>
               </div>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary  text-base-200 font-mono text-3xl">
-                  +1
-                </button>
-                <button className="btn btn-primary  text-base-200 font-mono text-3xl">
-                  +5
-                </button>
-                <button className="btn btn-primary  text-base-200 font-mono text-3xl">
-                  +10
-                </button>
+                {[1, 5, 10].map((number) => {
+                  return (
+                    <button
+                      key={number}
+                      onClick={async () => {
+                        setUsage(increment(usage, number));
+                        await fetch(
+                          "http://localhost:300/api/shelter/" + shelter,
+                          {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                              action: "update",
+                              usage: usage,
+                            }),
+                          }
+                        );
+                      }}
+                      className="btn btn-primary  text-base-200 font-mono text-3xl"
+                    >
+                      {"+" + number}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
