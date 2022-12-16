@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import Location from "../components/location";
-
 import Navbar from "../components/navbar";
 const Map = dynamic(() => import("../components/map"), {
   ssr: false,

@@ -12,7 +12,7 @@ function Navbar({ type }) {
         </div>
         <br />
       </div>
-      {type === 1 ? (
+      {type === "homepage" ? (
         <div>
           <div className="invisible sm:visible text-xl sm:text-3xl font-mono text-base-100">
             Location:

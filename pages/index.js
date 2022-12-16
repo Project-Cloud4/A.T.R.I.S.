@@ -12,7 +12,7 @@ export default function Home({ location }) {
   return (
     <div className="w-screen h-screen ">
       <div className="">
-        <Navbar type={1} />
+        <Navbar type={"homepage"} />
       </div>
       <div className="-mt-[15%] sm:-mt-[4%]  bg-[url('/bg-home-mobile.png')] sm:bg-[url('/bg-home.png')] bg-contain bg-no-repeat ">
         <ThreeGlobe />

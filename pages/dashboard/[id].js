@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Resources from "../../components/resources";
-import increment from "../../utils/increment";
 import { useRouter } from "next/router";
+import Resources from "../../components/resources";
+import incrementby from "../../utils/increment";
 
 function Widget({ props }) {
   const [check, setCheck] = useState(props.cty === "on");
@@ -85,7 +85,6 @@ function AdminApps() {
 
   let actModal = () => {
     setModal(!modal);
-    console.log(modal);
   };
 
   let widgets = [
@@ -129,7 +128,6 @@ function AdminApps() {
           <h1 className="text-9xl text-primary basis-1/6 font-bold font-mono inline-block relative z-3 ">
             Dashboard
           </h1>
-
           <div className=" card h-1/2 w-[80%] bg-secondary shadow-xl ">
             <div className="card-body">
               <div className="flex justify-center items-center flex-col">
@@ -154,9 +152,9 @@ function AdminApps() {
                     <button
                       key={number}
                       onClick={async () => {
-                        setUsage(increment(usage, number));
+                        setUsage(incrementby(usage, number));
                         await fetch(
-                          "http://localhost:300/api/shelter/" + shelter,
+                          "http://localhost:3000/api/shelter/" + shelter,
                           {
                             method: "POST",
                             headers: {

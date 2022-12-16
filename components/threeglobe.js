@@ -10,7 +10,6 @@ function lonLatToVector3(lng, lat, out) {
   //flips the Y axis
   lat = Math.PI / 2 - lat;
 
-  //distribute to sphere
   out.set(
     Math.sin(lat) * Math.sin(lng),
     Math.cos(lat),
@@ -20,7 +19,7 @@ function lonLatToVector3(lng, lat, out) {
   return out;
 }
 
-function Box() {
+function GlobePosition() {
   const [loading, setLoading] = useState(true);
   const [latlng, setLatlng] = useState([]);
 
@@ -33,17 +32,14 @@ function Box() {
   let [coordinates, setCoordinates] = useState({ x: 0, z: 0, y: 0 });
   useEffect(() => {
     let coord = lonLatToVector3(latlng.longitude, latlng.latitude);
-    //console.log(  latlng);
-    coord.y = coord.y + 0.4;
-    coord.z = coord.z - 0.3;
-    coord.x = coord.x - 0.4;
+    coord.y = -coord.y;
+    coord.z = coord.z;
+    coord.x = -coord.x;
     setCoordinates(coord);
     console.log(coord);
-
-    //console.log(coordinates);
   }, [latlng]);
 
-  const mesh = useRef(); //tood add stuff
+  const mesh = useRef();
   return (
     <mesh position={coordinates} ref={mesh}>
       <boxGeometry args={[0.1, 0.1, 0.1]} />
@@ -55,7 +51,7 @@ function Box() {
 const Earth = () => {
   const modelEnv = useRef();
   //let rotationDest = 0.1;
-  //  let currentRotation = 0;
+  //let currentRotation = 0;
   useFrame((state, delta) => {
     // currentRotation = MathUtils.lerp(currentRotation, rotationDest, 0.05); //linear interpolation
     // modelEnv.current.rotation.y = currentRotation;
@@ -74,7 +70,7 @@ export default function ThreeGlobe() {
       <Canvas>
         <OrbitControls />
         <Earth />
-        <Box />
+        <GlobePosition />
         <Environment preset="sunset" />
       </Canvas>
     </div>
